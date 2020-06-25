@@ -1,0 +1,15 @@
+image: maven:3.3.9-jdk-8
+
+java:
+  tags:
+    - meindl.dev
+    - tobiasmeindl
+  stage: test
+  script:
+  - mvn verify
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent compile test -Pdev sonar:sonar -Dsonar.projectKey=swe-Do-24 -Dsonar.projectName=swe-Do-24 -Dsonar.host.url=https://ec.cs.hm.edu/
+  artifacts:
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+        - target/failsafe-reports/TEST-*.xml
